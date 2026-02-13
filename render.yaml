@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: student-notes-manager
+    env: python
+    region: ohio
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn StudentNotesManager.wsgi
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: student-notes-manager.onrender.com
+    autoDeploy: true
+    pythonVersion: 3.11
